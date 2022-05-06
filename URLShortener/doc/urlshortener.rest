@@ -1,0 +1,14 @@
+// create a new a urlshort
+POST http://localhost:3000/api/v1/shorturl HTTP/1.1
+Content-Type: application/json
+
+{
+    "url": "http://www.example.com"
+}
+
+###
+
+// redirect to urlshort
+// @param: short_url: string
+GET http://localhost:3000/api/v1/shorturl/ns8kVRVhKMEcJMgWW2LcW HTTP/1.1
+
