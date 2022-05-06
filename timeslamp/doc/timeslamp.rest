@@ -1,0 +1,13 @@
+// get current date
+GET http://localhost:3000/api/v1/ HTTP/1.1
+
+
+###
+
+// get date by unix or utc date format
+// @PARAM data: string|number
+GET http://localhost:3000/api/v1/1651856118224 HTTP/1.1
+
+###
+
+GET http://localhost:3000/api/v1/2021-06-11 HTTP/1.1
