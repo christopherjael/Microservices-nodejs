@@ -9,7 +9,7 @@
     "start": "node src/app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Christopher Montero D'oleo",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
