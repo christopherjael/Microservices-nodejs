@@ -12,19 +12,24 @@ const getCurrentDate = (req, res) => {
 };
 
 const getDate = (req, res) => {
-  let { date } = req.params;
+  let date_string = req.params.date;
 
   let unix = null;
   let utc = null;
 
-  if (date.includes('-')) {
-    unix = new Date(date).getTime();
-    utc = new Date(date).toUTCString();
+  if (
+    date_string.includes('-') ||
+    date_string.includes('%') ||
+    date_string.includes(' ')
+  ) {
+    date_string = decodeURI(date_string);
+    unix = new Date(date_string).getTime();
+    utc = new Date(date_string).toUTCString();
   } else {
-    date = parseInt(date);
+    date_string = parseInt(date_string);
 
-    unix = new Date(date).getTime();
-    utc = new Date(date).toUTCString();
+    unix = new Date(date_string).getTime();
+    utc = new Date(date_string).toUTCString();
   }
 
   if (!unix | !utc) {
