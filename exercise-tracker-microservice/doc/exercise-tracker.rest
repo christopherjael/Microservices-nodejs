@@ -1,0 +1,33 @@
+// Create new user
+POST http://localhost:3000/api/v1/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "John Doe" 
+}
+
+###
+
+// get all users
+GET http://localhost:3000/api/v1/users HTTP/1.1
+
+###
+
+// create new exercise
+// @param _id: MongoID
+// @body {description: String, duration: String, date?: Date}
+POST http://localhost:3000/api/v1/users/627d50cf1a59a8b36381f68e/exercises HTTP/1.1
+Content-Type: application/json
+
+{
+    "description": "none",
+    "duration": 60,
+    "date": "2022-06-12"
+}
+
+###
+
+// get logs from user exercises
+// @param _id: MongoID
+// @query [from][&to][&limit]
+GET http://localhost:3000/api/v1/users/627d50cf1a59a8b36381f68e/logs HTTP/1.1
