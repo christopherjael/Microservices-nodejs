@@ -1,6 +1,5 @@
-const Users = require('../models/users.model');
+const Users = require('../models/users.model.js');
 const Exercises = require('../models/exercises.model');
-const query = require('express/lib/middleware/query');
 
 // create new user
 const createNewUser = async (req, res) => {
@@ -18,11 +17,8 @@ const createNewUser = async (req, res) => {
   const result = await newUser.save();
 
   res.status(201).json({
-    status: 201,
-    result: {
-      _id: result._id,
-      username: result.username,
-    },
+    _id: result._id,
+    username: result.username,
   });
 };
 
@@ -50,31 +46,21 @@ const createNewExercise = async (req, res) => {
     });
   }
 
-  let dateOptions = {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  };
-
   const newExercises = new Exercises({
     username: existUser.username,
     description,
     duration: Number(duration),
-    date: date || new Date().toLocaleDateString('en-US', dateOptions),
+    date: date || new Date().toDateString(),
   });
 
   const result = await newExercises.save();
 
-  res.status(201).json({
-    status: 201,
-    result: {
-      _id: result._id,
-      username: result.username,
-      description: result.description,
-      duration: result.duration,
-      date: new Date(result.date).toLocaleDateString('en-US', dateOptions),
-    },
+  return res.json({
+    _id: existUser._id,
+    username: result.username,
+    date: new Date(result.date).toDateString(),
+    duration: Number(duration),
+    description,
   });
 };
 
@@ -112,27 +98,19 @@ const getLogs = async (req, res) => {
   // count documents
   const count = await Exercises.find(query).limit(limit).count();
 
-  let dateOptions = {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  };
-
-  //
-  const logs = exercisesfromUser.map((exercise) => {
+  const log = exercisesfromUser.map((exercise) => {
     return {
       description: exercise.description,
       duration: exercise.duration,
-      date: new Date(exercise.date).toLocaleDateString('en-US', dateOptions),
+      date: new Date(exercise.date).toDateString(),
     };
   });
 
   const result = {
+    _id: existUser._id,
     username: existUser.username,
     count,
-    _id: existUser._id,
-    logs,
+    log,
   };
 
   res.json(result);
